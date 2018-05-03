@@ -1,0 +1,25 @@
+{
+  "name": "mws_node",
+  "version": "1.0.0",
+  "description": "NodeJS / Express / PostgreSQL part to the iOS Core Data and Web Server Data Base Sync exploration project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruslanvs/mws_node.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ruslanvs/mws_node/issues"
+  },
+  "homepage": "https://github.com/ruslanvs/mws_node#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "pg": "^7.4.1",
+    "pg-format": "^1.0.4"
+  }
+}
