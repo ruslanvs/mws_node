@@ -14,7 +14,7 @@ let config = {
     user: PGUSER,
     password: PW,
     database: PGDATABASE,
-    max: 10,
+    max: 100,
     idleTimeoutMillis: 30000
 }
 
@@ -22,7 +22,7 @@ let pool = new pg.Pool( config )
 let myClient
 
 app.get( "/schools", function( req, res ){
-    // res.json( "MWS is here" )
+    console.log( "Get all schools route triggered" )
     pool.connect( function( err, client, done ){
         if( err ){ res.json( err ) }
         myClient = client
@@ -35,6 +35,7 @@ app.get( "/schools", function( req, res ){
 })
 
 app.get( "/schools_updated_after/:timestamp", function( req, res ){
+    console.log( "Incremental schools fetch route triggered for dates after: " )
     let timestamp = req.params.timestamp
     console.log( timestamp )
     pool.connect( function( err, client, done ){
