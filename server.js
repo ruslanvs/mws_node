@@ -19,17 +19,16 @@ let config = {
 }
 
 let pool = new pg.Pool( config )
-let myClient
 
 app.get( "/schools", function( req, res ){
     console.log( "Get all schools route triggered" )
     pool.connect( function( err, client, done ){
         if( err ){ res.json( err ) }
-        myClient = client
         let query = format( "SELECT * FROM schools" )
-        myClient.query( query, function( err, data ){
+        client.query( query, function( err, data ){
             if( err ){ res.json( { message: "Error", error: err } ) }
             else { res.json( data.rows ) }
+            client.end()
         })
     })
 })
@@ -40,11 +39,11 @@ app.get( "/schools_updated_after/:timestamp", function( req, res ){
     console.log( timestamp )
     pool.connect( function( err, client, done ){
         if( err ){ res.json( err ) }
-        myClient = client
         let query = format( "SELECT * FROM schools WHERE updated_at > '" + timestamp + "'" )
-        myClient.query( query, function( err, data ){
+        client.query( query, function( err, data ){
             if( err ){ res.json( { message: "Error", error: err } ) }
             else { res.json( data.rows ) }
+            client.end()
         })
     })
 })
