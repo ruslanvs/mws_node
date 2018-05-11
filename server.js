@@ -48,6 +48,35 @@ app.get( "/schools_updated_after/:timestamp", function( req, res ){
     })
 })
 
+app.get( "/students", function( req, res ){
+    console.log( "Get all students route triggered" )
+    pool.connect( function( err, client, done ){
+        if( err ){ res.json( err ) }
+        let query = format( "SELECT * FROM students" )
+        client.query( query, function( err, data ){
+            if( err ){ res.json( { message: "Error", error: err } ) }
+            else { res.json( data.rows ) }
+            client.end()
+        })
+    })
+})
+
+app.get( "/students_updated_after/:timestamp", function( req, res ){
+    console.log( "Incremental students fetch route triggered for dates after: " )
+    let timestamp = req.params.timestamp
+    console.log( timestamp )
+    pool.connect( function( err, client, done ){
+        if( err ){ res.json( err ) }
+        let query = format( "SELECT * FROM students WHERE updated_at > '" + timestamp + "'" )
+        client.query( query, function( err, data ){
+            if( err ){ res.json( { message: "Error", error: err } ) }
+            else { res.json( data.rows ) }
+            client.end()
+        })
+    })
+})
+
+
 app.listen( port, function(){
     console.log(`listening on port ${port}` )
 } )
